@@ -1,5 +1,4 @@
 import { RewardItem } from './RewardItem'
-import { ReactComponent as AddFriendIcon } from '../assets/images/friend-svgrepo-com.svg'
 
 export const Rewards = ({ point_age = 0 }) => {
   const accountAgeIcon = (
