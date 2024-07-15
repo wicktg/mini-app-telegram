@@ -18,17 +18,16 @@ const InviteFriends: React.FC = () => {
   ]
 
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-black text-white p-4">
-      <div className="text-center">
+    <div className="min-h-screen flex flex-col bg-black text-white">
+      <div className="text-center p-4">
         <h1 className="text-2xl font-bold">Invited friends</h1>
-
         <p className="text-xl mt-1">and get more DUCKS</p>
-        <div className="my-8">
+        <div className="my-2">
           <img src={duckCoin} alt="DUCKS" className="mx-auto" />
         </div>
       </div>
 
-      <div className="">
+      <div className="flex-grow p-4 overflow-y-auto ">
         <h2 className="text-lg font-bold mb-4">2 friends</h2>
         {friends.map((friend, index) => (
           <FriendItem
@@ -38,6 +37,13 @@ const InviteFriends: React.FC = () => {
             point={friend.point}
           />
         ))}
+        <div className="h-20"></div>
+      </div>
+
+      <div className="fixed bottom-12 left-0 w-full p-5 z-50 bg-black">
+        <button className="w-full p-3 bg-white rounded-full text-black">
+          Invite friend
+        </button>
       </div>
     </div>
   )
