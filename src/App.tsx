@@ -10,7 +10,7 @@ function App() {
       <MainLayout>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/rank" element={<LeaderboardPage />} />
+          <Route path="/leaderboard" element={<LeaderboardPage />} />
           <Route path="/invite" element={<InviteFriendPage />} />
         </Routes>
       </MainLayout>
