@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import duckCoin from '../assets/images/duck_coin.png'
 import FriendItem from './FriendItem'
+import WebApp from '@twa-dev/sdk'
+import { Telegram } from '@twa-dev/types'
 
 const InviteFriends: React.FC = () => {
   const friends = [
@@ -16,6 +18,40 @@ const InviteFriends: React.FC = () => {
       point: 1487,
     },
   ]
+
+  useEffect(() => {
+    if (window.Telegram) {
+      window.Telegram.WebApp.ready()
+    }
+  }, [])
+
+  // const handleForward = async () => {
+  //   try {
+  //     WebApp.sendData({
+  //       data: 'Test Message', // Send a simple test message
+  //     })
+  //     console.log('Data sent successfully!')
+  //   } catch (error) {
+  //     console.error('Error sending data:', error)
+  //   }
+  // }
+
+  // const handleForward = () => {
+  //   console.log('Forwarding message')
+  //   // const message = encodeURIComponent('Check out this mini app!')
+  //   // const url = `https://t.me/share/url?url=&text=${message}`
+
+  //   // window.open(url, '_blank')
+  //   WebApp.sendData({
+  //     data: 'Test Message',
+  //   })
+
+  //   console.log('Data sent successfully!')
+  // }
+
+  const handleForward = () => {
+    WebApp.openTelegramLink('https')
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-black text-white">
@@ -41,7 +77,9 @@ const InviteFriends: React.FC = () => {
       </div>
 
       <div className="fixed bottom-12 left-0 w-full p-5 z-50 bg-black">
-        <button className="w-full p-3 bg-white rounded-full text-black">
+        <button
+          className="w-full p-3 bg-white rounded-full text-black"
+          onClick={handleForward}>
           Invite friend
         </button>
       </div>

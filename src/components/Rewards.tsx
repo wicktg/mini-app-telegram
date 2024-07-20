@@ -1,6 +1,6 @@
 import { RewardItem } from './RewardItem'
 
-export const Rewards = ({ point_age = 0 }) => {
+export const Rewards = ({ pointAge = 0, pointFriends = 0 }) => {
   const accountAgeIcon = (
     <svg
       className="w-6 h-6"
@@ -74,7 +74,7 @@ export const Rewards = ({ point_age = 0 }) => {
   return (
     <div className=" text-white p-4 rounded-lg ">
       <div className="text-xl font-bold mb-4">Your rewards</div>
-      <RewardItem icon={accountAgeIcon} title="Account age" point={2400} />
+      <RewardItem icon={accountAgeIcon} title="Account age" point={pointAge} />
       <RewardItem
         icon={telegramPremiumIcon}
         title="Telegram Premium"
@@ -83,7 +83,7 @@ export const Rewards = ({ point_age = 0 }) => {
       <RewardItem
         icon={invitedFriendsIcon}
         title="Invited friends"
-        point={42}
+        point={pointFriends}
       />
     </div>
   )
