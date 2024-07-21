@@ -5,6 +5,7 @@ type UserCardProps = {
   name: string
   point: number
   isUserCard?: boolean
+  avatar?: string
 }
 
 const UserCard: React.FC<UserCardProps> = ({
@@ -12,6 +13,7 @@ const UserCard: React.FC<UserCardProps> = ({
   name,
   point,
   isUserCard = false,
+  avatar,
 }) => {
   return (
     <div
@@ -20,7 +22,11 @@ const UserCard: React.FC<UserCardProps> = ({
       }`}>
       <div className="flex items-center">
         <div className="bg-amber-950 w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold mr-2">
-          {name.slice(0, 2).toUpperCase()}
+          {avatar ? (
+            <img src={avatar} className="rounded-full" />
+          ) : (
+            name.slice(0, 2).toUpperCase()
+          )}
         </div>
         <div>
           <p className="font-bold">{name}</p>

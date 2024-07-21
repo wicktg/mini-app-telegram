@@ -16,6 +16,7 @@
     "target": "ESNext",
     "types": ["vite"]
   },
+  "paths": { "@/*": ["src/*"] },
   "include": ["./src", "src/types/"],
   "exclude": ["node_modules"]
 }

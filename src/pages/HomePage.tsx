@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 import { Community } from '../components/Community'
 import { Content } from '../components/Content'
 import { Header } from '../components/Header'
-import { Rewards } from '../components/Rewards'
 import WebApp from '@twa-dev/sdk'
 
 import axios from '../config/axios.config'
+import { Rewards } from '../components/Rewards'
 
 interface User {
   telegramId: string
