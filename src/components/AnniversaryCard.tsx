@@ -19,11 +19,12 @@ const AnniversaryCard = () => {
     if (userId) {
       dispatch(fetchRankingById(userId))
     }
-  }, [])
+  }, [userId, dispatch])
 
   useEffect(() => {
     if (ranking?.createdAt) {
-      const years = handleYear(ranking.createdAt)
+      const createdAtDate = new Date(ranking.createdAt)
+      const years = handleYear(createdAtDate)
       setYear(years)
     }
   }, [ranking])

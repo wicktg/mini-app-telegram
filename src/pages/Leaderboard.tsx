@@ -18,11 +18,13 @@ const LeaderboardPage = () => {
   )
 
   useEffect(() => {
-    if (userId) {
+    if (userId && !ranking) {
       dispatch(fetchRankingById(userId))
     }
-    dispatch(fetchRankings())
-  }, [userId, dispatch])
+    if (!rankings) {
+      dispatch(fetchRankings())
+    }
+  }, [userId, ranking, rankings, dispatch])
 
   return (
     <div className="p-4 text-white">
