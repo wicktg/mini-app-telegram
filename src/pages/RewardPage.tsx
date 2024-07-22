@@ -1,26 +1,24 @@
 import WebApp from '@twa-dev/sdk'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from '../config/axios.config'
-import { Ranking } from '../interfaces/ranks.type'
+import { useAppDispatch, useAppSelector } from '../app/hook'
+import { fetchRankingById, selectUserRank } from '../app/slice/rankingSlice'
 
 const RewardPage = () => {
-  const [ranking, setRanking] = useState<Ranking | null>(null)
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const userId = WebApp.initDataUnsafe?.user?.id ?? 5053674641
+  const ranking = useAppSelector(selectUserRank)
+
   const handleContinue = () => {
     navigate('/')
   }
 
   useEffect(() => {
-    const userId = WebApp.initDataUnsafe?.user?.id ?? null
-
     if (userId) {
-      axios
-        .get(`/ranking/id/${userId}`)
-        .then(({ data }) => setRanking(data))
-        .catch((error) => console.error('Error fetching user data:', error))
+      dispatch(fetchRankingById(userId))
     }
-  }, [])
+  }, [userId, dispatch])
 
   return (
     <div className="min-h-screen flex flex-col justify-between bg-black text-white p-4 ">

@@ -4,7 +4,7 @@ import duckCoin from '../assets/images/duck_coin.png'
 import axios from '../config/axios.config'
 import { Referral } from '../interfaces/referrals.type'
 import FriendItem from './FriendItem'
-import { preProcessUrl } from '../utils/image'
+import { preProcessUrl } from '../helpers/image'
 
 const InviteFriends: React.FC = () => {
   const [friends, setFriends] = useState<Referral[] | null>(null)
@@ -19,30 +19,6 @@ const InviteFriends: React.FC = () => {
         .catch((error) => console.error('Error fetching user data:', error))
     }
   }, [])
-
-  // const handleForward = async () => {
-  //   try {
-  //     WebApp.sendData({
-  //       data: 'Test Message', // Send a simple test message
-  //     })
-  //     console.log('Data sent successfully!')
-  //   } catch (error) {
-  //     console.error('Error sending data:', error)
-  //   }
-  // }
-
-  // const handleForward = () => {
-  //   console.log('Forwarding message')
-  //   // const message = encodeURIComponent('Check out this mini app!')
-  //   // const url = `https://t.me/share/url?url=&text=${message}`
-
-  //   // window.open(url, '_blank')
-  //   WebApp.sendData({
-  //     data: 'Test Message',
-  //   })
-
-  //   console.log('Data sent successfully!')
-  // }
 
   const handleForward = () => {
     WebApp.openTelegramLink('https')

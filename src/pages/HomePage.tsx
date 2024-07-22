@@ -1,46 +1,33 @@
-import { useEffect, useState } from 'react'
+import WebApp from '@twa-dev/sdk'
+import { useEffect } from 'react'
 import { Community } from '../components/Community'
 import { Content } from '../components/Content'
 import { Header } from '../components/Header'
-import WebApp from '@twa-dev/sdk'
 
-import axios from '../config/axios.config'
+import { useAppDispatch, useAppSelector } from '../app/hook'
+import { fetchUserById, selectUserById } from '../app/slice/userSlice'
 import { Rewards } from '../components/Rewards'
 
-interface User {
-  telegramId: string
-  username: string
-  avatarPath: string
-  point: number
-  friendPoint: number
-  registeredDate: string
-}
-
 const HomePage = () => {
-  const [userData, setUserData] = useState<User | null>(null)
+  const dispatch = useAppDispatch()
+  const user = useAppSelector(selectUserById)
+  const userId = WebApp.initDataUnsafe?.user?.id ?? 5053674641
 
   useEffect(() => {
-    const userId = WebApp.initDataUnsafe?.user?.id
-
     if (userId) {
-      axios
-        .get(`/user/id/${userId}`)
-        .then(({ data }) => setUserData(data))
-        .catch((error) => console.error('Error fetching user data:', error))
+      dispatch(fetchUserById(userId))
     }
-  }, [])
+  }, [userId, dispatch])
 
   return (
     <div>
       <Header />
       <div className="pt-1">
-        <Content
-          point={userData?.point ? userData.point + userData.friendPoint : 0}
-        />
+        <Content point={user?.point ? user.point + user.friendPoint : 0} />
         <Community />
         <Rewards
-          pointAge={userData?.point ?? 0}
-          pointFriends={userData?.friendPoint ?? 0}
+          pointAge={user?.point ?? 0}
+          pointFriends={user?.friendPoint ?? 0}
         />
       </div>
     </div>
