@@ -34,7 +34,9 @@ const HomePage = () => {
     <div>
       <Header />
       <div className="pt-1">
-        <Content point={userData?.point ?? 0} />
+        <Content
+          point={userData?.point ? userData.point + userData.friendPoint : 0}
+        />
         <Community />
         <Rewards
           pointAge={userData?.point ?? 0}

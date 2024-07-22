@@ -1,11 +1,41 @@
+import WebApp from '@twa-dev/sdk'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import axios from '../config/axios.config'
+import { Ranking } from '../interfaces/ranks.type'
 
 const AnniversaryCard = () => {
+  const [ranking, setRanking] = useState<Ranking | null>(null)
+  const [year, setYear] = useState(1)
+
   const navigate = useNavigate()
   const handleContinue = () => {
     navigate('/reward')
   }
 
+  useEffect(() => {
+    const userId = WebApp.initDataUnsafe?.user?.id ?? null
+
+    if (userId) {
+      axios
+        .get(`/ranking/id/${userId}`)
+        .then(({ data }) => {
+          setRanking(data)
+          if (data.createdAt) {
+            const years = handleYear(data.createdAt)
+            setYear(years)
+          }
+        })
+        .catch((error) => console.error('Error fetching user data:', error))
+    }
+  }, [])
+
+  const handleYear = (time: Date) => {
+    const year = time.getFullYear()
+    const currentYear = new Date().getFullYear()
+    const differentYear = currentYear - year
+    return differentYear > 1 ? differentYear : 1
+  }
   return (
     <div
       className="min-h-screen flex flex-col justify-between bg-black text-white p-4 hover:bg-cover focus:bg-cover"
@@ -24,13 +54,13 @@ const AnniversaryCard = () => {
               className="mx-auto w-full"
             />
             <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center">
-              <span className="text-9xl font-bold">2</span>
+              <span className="text-9xl font-bold">{year}</span>
             </div>
           </div>
           <p className="text-4xl font-bold mt-4">years ago</p>
         </div>
         <p className="mt-4 font-bold">
-          Your account number is <strong>#982124</strong>
+          Your account number is <strong>#{ranking?.ranking ?? 0}</strong>
         </p>
         <p className="font-bold">You're in the Top 70% Telegram users 🔥</p>
       </div>

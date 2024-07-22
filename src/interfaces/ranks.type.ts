@@ -8,4 +8,5 @@ export interface Ranking {
   avatarPath: string
   ranking: number
   totalScore: string
+  createdAt: Date
 }

@@ -7,20 +7,6 @@ import { Ranking } from '../interfaces/ranks.type'
 import { preProcessUrl } from '../utils/image'
 
 const LeaderboardPage = () => {
-  const leaderboardData = [
-    { name: 'glebtma', score: 11908769, rank: 1 },
-    { name: 'Esalat', score: 10343451, rank: 2 },
-    { name: 'mohamahamed', score: 7681324, rank: 3 },
-    { name: 'NgdcKKhea', score: 1241512, rank: 4 },
-    { name: 'Serious', score: 932312, rank: 53423423 },
-  ]
-
-  const user = {
-    username: 'ducpro',
-    rank: 1110,
-    score: 12421343,
-  }
-
   const [userData, setuserData] = useState<Ranking | null>(null)
   const [rankings, setRankings] = useState<Ranking[] | null>(null)
   const [totalHolder, setTotalHolder] = useState(0)
@@ -43,7 +29,6 @@ const LeaderboardPage = () => {
       })
       .catch((error) => console.error('Error fetching ranking data: ', error))
   }, [])
-  const botToken = import.meta.env.VITE_BOT_TOKEN
 
   return (
     <div className="p-4 text-white">
