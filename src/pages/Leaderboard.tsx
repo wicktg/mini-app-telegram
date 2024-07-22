@@ -7,22 +7,15 @@ import {
   selectRankIncludeUser,
 } from '../app/slice/rankingSlice'
 import UserCard from '../components/Leaderboard/UserCard'
-import { preProcessUrl } from '../utils/image'
-import { RootState } from '../app/store'
+import { preProcessUrl } from '../helpers/image'
 
 const LeaderboardPage = () => {
-  const userId = WebApp.initDataUnsafe?.user?.id ?? null
+  const userId = WebApp.initDataUnsafe?.user?.id ?? 5053674641
   const dispatch = useAppDispatch()
-  // const { ranking, loading, error } = useAppSelector(selectRankings);
-  // const { ranking, rankings, totalHolder, loading, error } = useAppSelector((state: RootState) =>
-  // )
-  const { ranking, rankings, totalHolder, loading, error } = useAppSelector(
-    (state: RootState) => state.ranking,
-  )
 
-  // const [userData, setuserData] = useState<Ranking | null>(null)
-  // const [rankings, setRankings] = useState<Ranking[] | null>(null)
-  // const [totalHolder, setTotalHolder] = useState(0)
+  const { ranking, rankings, totalHolder } = useAppSelector(
+    selectRankIncludeUser,
+  )
 
   useEffect(() => {
     if (userId) {

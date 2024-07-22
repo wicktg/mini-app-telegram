@@ -1,34 +1,32 @@
 import WebApp from '@twa-dev/sdk'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from '../config/axios.config'
-import { Ranking } from '../interfaces/ranks.type'
+import { useAppDispatch, useAppSelector } from '../app/hook'
+import { fetchRankingById, selectUserRank } from '../app/slice/rankingSlice'
 
 const AnniversaryCard = () => {
-  const [ranking, setRanking] = useState<Ranking | null>(null)
   const [year, setYear] = useState(1)
-
+  const dispatch = useAppDispatch()
+  const ranking = useAppSelector(selectUserRank)
   const navigate = useNavigate()
+
+  const userId = WebApp.initDataUnsafe?.user?.id ?? 5053674641
   const handleContinue = () => {
     navigate('/reward')
   }
 
   useEffect(() => {
-    const userId = WebApp.initDataUnsafe?.user?.id ?? null
-
     if (userId) {
-      axios
-        .get(`/ranking/id/${userId}`)
-        .then(({ data }) => {
-          setRanking(data)
-          if (data.createdAt) {
-            const years = handleYear(data.createdAt)
-            setYear(years)
-          }
-        })
-        .catch((error) => console.error('Error fetching user data:', error))
+      dispatch(fetchRankingById(userId))
     }
   }, [])
+
+  useEffect(() => {
+    if (ranking?.createdAt) {
+      const years = handleYear(ranking.createdAt)
+      setYear(years)
+    }
+  }, [ranking])
 
   const handleYear = (time: Date) => {
     const year = time.getFullYear()

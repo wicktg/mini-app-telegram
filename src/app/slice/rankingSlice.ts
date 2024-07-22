@@ -1,7 +1,6 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { Ranking } from '../../interfaces/ranks.type'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from '../../config/axios.config'
-import { stat } from 'fs'
+import { Ranking } from '../../interfaces/ranks.type'
 import { RootState } from '../store'
 
 interface RankingState {
@@ -20,6 +19,14 @@ const initialState: RankingState = {
   error: null,
 }
 
+export const fetchRankingById = createAsyncThunk(
+  'ranking/fetchRankingById',
+  async (userId: number) => {
+    const response = await axios.get(`/ranking/id/${userId}`)
+    return response.data
+  },
+)
+
 export const fetchRankings = createAsyncThunk(
   'ranking/fetchRankings',
   async () => {
@@ -28,19 +35,11 @@ export const fetchRankings = createAsyncThunk(
   },
 )
 
-export const fetchRankingById = createAsyncThunk(
-  'ranking/fetchRankingById',
-  async (telegramId: number) => {
-    const response = await axios.get(`/ranking/id/${telegramId}`)
-    return response.data
-  },
-)
-
 const rankingSlice = createSlice({
   name: 'ranking',
   initialState,
   reducers: {},
-  extraReducers(builder) {
+  extraReducers: (builder) => {
     builder
       .addCase(fetchRankingById.pending, (state) => {
         state.loading = true
@@ -71,7 +70,6 @@ const rankingSlice = createSlice({
 })
 
 export const selectRankIncludeUser = (state: RootState) => state.ranking
-export const selectRankings = (state: RootState) => state.ranking.rankings
-export const selectRankingById = (state: RootState) => state.ranking.ranking
+export const selectUserRank = (state: RootState) => state.ranking.ranking
 
 export default rankingSlice.reducer
