@@ -3,14 +3,8 @@ import UserCard from '../components/Leaderboard/UserCard'
 import WebApp from '@twa-dev/sdk'
 import axios from '../config/axios.config'
 import { URL_FILE_TELEGRAM } from '../constants/token'
-
-interface Ranking {
-  telegramId: string
-  username: string
-  avatarPath: string
-  ranking: number
-  totalScore: string
-}
+import { Ranking } from '../interfaces/ranks.type'
+import { preProcessUrl } from '../utils/image'
 
 const LeaderboardPage = () => {
   const leaderboardData = [
@@ -27,51 +21,57 @@ const LeaderboardPage = () => {
     score: 12421343,
   }
 
-  const [rankingData, setRankingData] = useState<Ranking | null>(null)
+  const [userData, setuserData] = useState<Ranking | null>(null)
+  const [rankings, setRankings] = useState<Ranking[] | null>(null)
+  const [totalHolder, setTotalHolder] = useState(0)
 
   useEffect(() => {
-    const userId = WebApp.initDataUnsafe?.user?.id
+    const userId = WebApp.initDataUnsafe?.user?.id ?? null
 
     if (userId) {
       axios
         .get(`/ranking/id/${userId}`)
-        .then(({ data }) => setRankingData(data))
+        .then(({ data }) => setuserData(data))
         .catch((error) => console.error('Error fetching user data:', error))
     }
+
+    axios
+      .get('/ranking')
+      .then(({ data }) => {
+        setRankings(data.ranks)
+        setTotalHolder(data.totalHolder)
+      })
+      .catch((error) => console.error('Error fetching ranking data: ', error))
   }, [])
   const botToken = import.meta.env.VITE_BOT_TOKEN
-  console.log('Bot token: ', botToken)
 
-  const avatarPath = URL_FILE_TELEGRAM + botToken
-  console.log('avatar path: ', avatarPath)
   return (
     <div className="p-4 text-white">
       <h1 className="text-2xl font-bold mb-4 text-center">
         Telegram wall of fame
       </h1>
       <UserCard
-        name={rankingData?.username ?? 'User1'}
-        point={rankingData?.ranking ?? 0}
+        name={userData?.username ?? 'User1'}
+        point={userData?.ranking ?? 0}
         isUserCard={true}
-        rank={rankingData?.ranking ?? 0}
-        avatar={
-          rankingData?.avatarPath
-            ? `https://api.telegram.org/file/bot${botToken}/${rankingData?.avatarPath}`
-            : ''
-        }
+        rank={userData?.ranking ?? 0}
+        avatar={userData?.avatarPath ? preProcessUrl(userData?.avatarPath) : ''}
       />
 
       <button className="w-full bg-blue-600 py-2 rounded-lg font-bold text-white mb-4">
         ⭐ Boost score
       </button>
-      <h2 className="text-xl font-bold mb-4">13.6M holders</h2>
+      <h2 className="text-xl font-bold mb-4">{totalHolder}.6M holders</h2>
       <div>
-        {leaderboardData.map((user) => (
+        {rankings?.map((ranking) => (
           <UserCard
-            key={user.rank}
-            name={user.name}
-            point={user.score}
-            rank={user.rank}
+            key={ranking.telegramId}
+            name={ranking.username}
+            point={Number(ranking.totalScore)}
+            rank={ranking.ranking}
+            avatar={
+              ranking?.avatarPath ? preProcessUrl(ranking?.avatarPath) : ''
+            }
           />
         ))}
       </div>

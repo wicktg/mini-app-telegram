@@ -1,27 +1,22 @@
-import React, { useEffect } from 'react'
-import duckCoin from '../assets/images/duck_coin.png'
-import FriendItem from './FriendItem'
 import WebApp from '@twa-dev/sdk'
-import { Telegram } from '@twa-dev/types'
+import React, { useEffect, useState } from 'react'
+import duckCoin from '../assets/images/duck_coin.png'
+import axios from '../config/axios.config'
+import { Referral } from '../interfaces/referrals.type'
+import FriendItem from './FriendItem'
+import { preProcessUrl } from '../utils/image'
 
 const InviteFriends: React.FC = () => {
-  const friends = [
-    {
-      avatar:
-        'https://ichef.bbci.co.uk/news/976/cpsprodpb/16620/production/_91408619_55df76d5-2245-41c1-8031-07a4da3f313f.jpg',
-      name: 'letuan1201',
-      point: 2341,
-    },
-    {
-      avatar: 'https://m.media-amazon.com/images/I/517r-1LZfgL.jpg',
-      name: 'nganganga',
-      point: 1487,
-    },
-  ]
+  const [friends, setFriends] = useState<Referral[] | null>(null)
 
   useEffect(() => {
-    if (window.Telegram) {
-      window.Telegram.WebApp.ready()
+    const userId = WebApp.initDataUnsafe?.user?.id ?? null
+
+    if (userId) {
+      axios
+        .get(`/referral/id/${userId}`)
+        .then(({ data }) => setFriends(data))
+        .catch((error) => console.error('Error fetching user data:', error))
     }
   }, [])
 
@@ -64,13 +59,13 @@ const InviteFriends: React.FC = () => {
       </div>
 
       <div className="flex-grow p-4 overflow-y-auto ">
-        <h2 className="text-lg font-bold mb-4">2 friends</h2>
-        {friends.map((friend, index) => (
+        <h2 className="text-lg font-bold mb-4">{friends?.length} friends</h2>
+        {friends?.map((friend, index) => (
           <FriendItem
             key={index}
-            avatar={friend.avatar}
-            name={friend.name}
-            point={friend.point}
+            avatar={friend?.avatarPath ? preProcessUrl(friend.avatarPath) : ''}
+            name={friend.username}
+            point={friend.scoreEarned}
           />
         ))}
         <div className="h-20"></div>

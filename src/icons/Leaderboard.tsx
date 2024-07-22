@@ -1,4 +1,4 @@
-import { IconProps } from '../utils/type'
+import { IconProps } from '../interfaces/Icon.type'
 
 export const Leaderboard: React.FC<IconProps> = ({
   size = 24,
