@@ -8,13 +8,16 @@ import {
 } from '../app/slice/rankingSlice'
 import UserCard from '../components/Leaderboard/UserCard'
 import { preProcessUrl } from '../utils/image'
+import { RootState } from '../app/store'
 
 const LeaderboardPage = () => {
   const userId = WebApp.initDataUnsafe?.user?.id ?? null
   const dispatch = useAppDispatch()
   // const { ranking, loading, error } = useAppSelector(selectRankings);
+  // const { ranking, rankings, totalHolder, loading, error } = useAppSelector((state: RootState) =>
+  // )
   const { ranking, rankings, totalHolder, loading, error } = useAppSelector(
-    selectRankIncludeUser,
+    (state: RootState) => state.ranking,
   )
 
   // const [userData, setuserData] = useState<Ranking | null>(null)
@@ -26,7 +29,7 @@ const LeaderboardPage = () => {
       dispatch(fetchRankingById(userId))
     }
     dispatch(fetchRankings())
-  }, [dispatch])
+  }, [userId, dispatch])
 
   return (
     <div className="p-4 text-white">
