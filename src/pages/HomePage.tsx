@@ -14,10 +14,10 @@ const HomePage = () => {
   const userId = WebApp.initDataUnsafe?.user?.id ?? 5053674641
 
   useEffect(() => {
-    if (userId) {
+    if (userId && !user) {
       dispatch(fetchUserById(userId))
     }
-  }, [userId, dispatch])
+  }, [userId, user, dispatch])
 
   return (
     <div>
