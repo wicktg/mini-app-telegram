@@ -8,23 +8,36 @@ import {
 } from '../app/slice/rankingSlice'
 import UserCard from '../components/Leaderboard/UserCard'
 import { preProcessUrl } from '../helpers/image'
+import { RootState } from '../app/store'
 
 const LeaderboardPage = () => {
   const userId = WebApp.initDataUnsafe?.user?.id ?? 5053674641
   const dispatch = useAppDispatch()
 
-  const { ranking, rankings, totalHolder } = useAppSelector(
-    selectRankIncludeUser,
+  const { ranking, rankings, totalHolder, loading, error } = useAppSelector(
+    (state: RootState) => state.ranking,
   )
 
   useEffect(() => {
-    if (userId && !ranking) {
+    if (userId) {
       dispatch(fetchRankingById(userId))
     }
-    if (!rankings) {
-      dispatch(fetchRankings())
-    }
-  }, [userId, ranking, rankings, dispatch])
+    dispatch(fetchRankings())
+  }, [userId, dispatch])
+
+  console.log('error: ', error)
+  // const { ranking, rankings, totalHolder } = useAppSelector(
+  //   selectRankIncludeUser,
+  // )
+
+  // useEffect(() => {
+  //   if (userId && !ranking) {
+  //     dispatch(fetchRankingById(userId))
+  //   }
+  //   if (!rankings) {
+  //     dispatch(fetchRankings())
+  //   }
+  // }, [userId, ranking, rankings, dispatch])
 
   return (
     <div className="p-4 text-white">
