@@ -39,9 +39,8 @@ const InviteFriends: React.FC = () => {
   // https://t.me/share/url?url={url}&text={text}
 
   const handleOpenTgLink = () => {
-    const url =
-      'https://t.me/dogshouse_bot/join?startapp=jWlnLob9THy7UTPAApC1SA'
-    const text = 'whoisDogs'
+    const url = `https://t.me/Duck_01_bot/?start=${userId}`
+    const text = 'whoisDucks'
     window.Telegram.WebApp.openTelegramLink(
       `https://t.me/share/url?url=${url}&text=${text}`,
     )
