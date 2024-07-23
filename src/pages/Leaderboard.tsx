@@ -1,11 +1,8 @@
 import WebApp from '@twa-dev/sdk'
 import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../app/hook'
-import {
-  fetchRankingById,
-  fetchRankings,
-  selectRankIncludeUser,
-} from '../app/slice/rankingSlice'
+import { fetchRankingById, fetchRankings } from '../app/slice/rankingSlice'
+import { RootState } from '../app/store'
 import UserCard from '../components/Leaderboard/UserCard'
 import { preProcessUrl } from '../helpers/image'
 
@@ -13,8 +10,8 @@ const LeaderboardPage = () => {
   const userId = WebApp.initDataUnsafe?.user?.id ?? 5053674641
   const dispatch = useAppDispatch()
 
-  const { ranking, rankings, totalHolder } = useAppSelector(
-    selectRankIncludeUser,
+  const { ranking, rankings, totalHolder, loading, error } = useAppSelector(
+    (state: RootState) => state.ranking,
   )
 
   useEffect(() => {

@@ -8,10 +8,9 @@ import { preProcessUrl } from '../helpers/image'
 
 const InviteFriends: React.FC = () => {
   const [friends, setFriends] = useState<Referral[] | null>(null)
+  const userId = WebApp.initDataUnsafe?.user?.id ?? 5053674641
 
   useEffect(() => {
-    const userId = WebApp.initDataUnsafe?.user?.id ?? null
-
     if (userId) {
       axios
         .get(`/referral/id/${userId}`)
@@ -20,10 +19,32 @@ const InviteFriends: React.FC = () => {
     }
   }, [])
 
-  const handleForward = () => {
-    WebApp.openTelegramLink('https')
-  }
+  const referral = import.meta.env.VITE_REFERRAL_LINK
 
+  useEffect(() => {
+    if (window.Telegram?.WebApp) {
+      window.Telegram.WebApp.onEvent('web_app_open_tg_link', handleOpenTgLink)
+    }
+
+    return () => {
+      if (window.Telegram?.WebApp) {
+        window.Telegram.WebApp.offEvent(
+          'web_app_open_tg_link',
+          handleOpenTgLink,
+        )
+      }
+    }
+  }, [])
+
+  // https://t.me/share/url?url={url}&text={text}
+
+  const handleOpenTgLink = () => {
+    const url = `https://t.me/Duck_01_bot/?start=${userId}`
+    const text = 'whoisDucks'
+    window.Telegram.WebApp.openTelegramLink(
+      `https://t.me/share/url?url=${url}&text=${text}`,
+    )
+  }
   return (
     <div className="min-h-screen flex flex-col bg-black text-white">
       <div className="text-center p-4">
@@ -50,7 +71,7 @@ const InviteFriends: React.FC = () => {
       <div className="fixed bottom-12 left-0 w-full p-5 z-50 bg-black">
         <button
           className="w-full p-3 bg-white rounded-full text-black"
-          onClick={handleForward}>
+          onClick={handleOpenTgLink}>
           Invite friend
         </button>
       </div>
