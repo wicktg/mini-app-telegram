@@ -8,10 +8,9 @@ import { preProcessUrl } from '../helpers/image'
 
 const InviteFriends: React.FC = () => {
   const [friends, setFriends] = useState<Referral[] | null>(null)
+  const userId = WebApp.initDataUnsafe?.user?.id ?? 5053674641
 
   useEffect(() => {
-    const userId = WebApp.initDataUnsafe?.user?.id ?? null
-
     if (userId) {
       axios
         .get(`/referral/id/${userId}`)
@@ -20,8 +19,10 @@ const InviteFriends: React.FC = () => {
     }
   }, [])
 
+  const referral = import.meta.env.VITE_REFERRAL_LINK
+
   const handleForward = () => {
-    WebApp.openTelegramLink('https')
+    WebApp.openTelegramLink(`/share/url?url=${referral + userId}`)
   }
 
   return (

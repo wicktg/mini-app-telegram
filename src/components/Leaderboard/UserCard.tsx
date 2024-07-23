@@ -36,7 +36,7 @@ const UserCard: React.FC<UserCardProps> = ({
         </div>
       </div>
       {isUserCard ? (
-        <p className="text-xm font-bold">{point} DOGS</p>
+        <p className="text-xm font-bold">#{rank} DOGS</p>
       ) : (
         <div
           className={`${

@@ -73,13 +73,12 @@
 
 // export default LeaderboardPage
 
+import WebApp from '@twa-dev/sdk'
 import { useEffect, useState } from 'react'
 import UserCard from '../components/Leaderboard/UserCard'
-import WebApp from '@twa-dev/sdk'
 import axios from '../config/axios.config'
-import { URL_FILE_TELEGRAM } from '../constants/token'
-import { Ranking } from '../interfaces/ranks.type'
 import { preProcessUrl } from '../helpers/image'
+import { Ranking } from '../interfaces/ranks.type'
 
 const LeaderboardPage = () => {
   const [userData, setuserData] = useState<Ranking | null>(null)
