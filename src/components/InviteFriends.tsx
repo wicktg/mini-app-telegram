@@ -21,12 +21,26 @@ const InviteFriends: React.FC = () => {
 
   const referral = import.meta.env.VITE_REFERRAL_LINK
 
-  const handleForward = () => {
+  useEffect(() => {
+    if (window.Telegram?.WebApp) {
+      window.Telegram.WebApp.onEvent('web_app_open_tg_link', handleOpenTgLink)
+    }
+
+    return () => {
+      if (window.Telegram?.WebApp) {
+        window.Telegram.WebApp.offEvent(
+          'web_app_open_tg_link',
+          handleOpenTgLink,
+        )
+      }
+    }
+  }, [])
+
+  const handleOpenTgLink = () => {
     WebApp.openTelegramLink(
       `https://t.me/dogshouse_bot/join?startapp=jWlnLob9THy7UTPAApC1SA&text=Who%20let%20the%20DOGS%20out?`,
     )
   }
-
   return (
     <div className="min-h-screen flex flex-col bg-black text-white">
       <div className="text-center p-4">
@@ -53,7 +67,7 @@ const InviteFriends: React.FC = () => {
       <div className="fixed bottom-12 left-0 w-full p-5 z-50 bg-black">
         <button
           className="w-full p-3 bg-white rounded-full text-black"
-          onClick={handleForward}>
+          onClick={handleOpenTgLink}>
           Invite friend
         </button>
       </div>
