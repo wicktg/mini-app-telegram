@@ -15,10 +15,10 @@ const RewardPage = () => {
   }
 
   useEffect(() => {
-    if (userId) {
+    if (userId && !ranking) {
       dispatch(fetchRankingById(userId))
     }
-  }, [userId, dispatch])
+  }, [userId, ranking, dispatch])
 
   return (
     <div className="min-h-screen flex flex-col justify-between bg-black text-white p-4 ">

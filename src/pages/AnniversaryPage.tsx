@@ -16,10 +16,10 @@ export default function AnniversaryPage() {
   }
 
   useEffect(() => {
-    if (userId) {
+    if (userId && !ranking) {
       dispatch(fetchRankingById(userId))
     }
-  }, [userId, dispatch])
+  }, [userId, ranking, dispatch])
 
   useEffect(() => {
     if (ranking?.createdAt) {
