@@ -22,7 +22,9 @@ const InviteFriends: React.FC = () => {
   const referral = import.meta.env.VITE_REFERRAL_LINK
 
   const handleForward = () => {
-    WebApp.openTelegramLink(`/share/url?url=${referral + userId}`)
+    WebApp.openTelegramLink(
+      `/share/url?url=https://t.me/Duck_01_bot/?start=6599291058`,
+    )
   }
 
   return (
