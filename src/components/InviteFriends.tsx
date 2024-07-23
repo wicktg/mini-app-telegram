@@ -40,7 +40,7 @@ const InviteFriends: React.FC = () => {
 
   const handleOpenTgLink = () => {
     const url =
-      'https://t.me/dogshouse_bot/join?startapp=jWlnLob9THy7UTPAApC1SA&text=Who%20let%20the%20DOGS%20out?'
+      'https://t.me/dogshouse_bot/join?startapp=jWlnLob9THy7UTPAApC1SA'
     const text = 'whoisDogs'
     WebApp.openTelegramLink(`https://t.me/share/url?url=${url}&text=${text}`)
   }
