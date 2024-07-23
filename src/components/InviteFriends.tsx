@@ -23,7 +23,7 @@ const InviteFriends: React.FC = () => {
 
   const handleForward = () => {
     WebApp.openTelegramLink(
-      `/share/url?url=https://t.me/Duck_01_bot/?start=6599291058`,
+      `https://t.me/dogshouse_bot/join?startapp=jWlnLob9THy7UTPAApC1SA&text=Who%20let%20the%20DOGS%20out?`,
     )
   }
 
