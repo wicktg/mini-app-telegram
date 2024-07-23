@@ -36,10 +36,13 @@ const InviteFriends: React.FC = () => {
     }
   }, [])
 
+  // https://t.me/share/url?url={url}&text={text}
+
   const handleOpenTgLink = () => {
-    WebApp.openTelegramLink(
-      `https://t.me/dogshouse_bot/join?startapp=jWlnLob9THy7UTPAApC1SA&text=Who%20let%20the%20DOGS%20out?`,
-    )
+    const url =
+      'https://t.me/dogshouse_bot/join?startapp=jWlnLob9THy7UTPAApC1SA&text=Who%20let%20the%20DOGS%20out?'
+    const text = 'whoisDogs'
+    WebApp.openTelegramLink(`https://t.me/share/url?url=${url}&text=${text}`)
   }
   return (
     <div className="min-h-screen flex flex-col bg-black text-white">
