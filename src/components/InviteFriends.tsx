@@ -42,7 +42,9 @@ const InviteFriends: React.FC = () => {
     const url =
       'https://t.me/dogshouse_bot/join?startapp=jWlnLob9THy7UTPAApC1SA'
     const text = 'whoisDogs'
-    WebApp.openTelegramLink(`https://t.me/share/url?url=${url}&text=${text}`)
+    window.Telegram.WebApp.openTelegramLink(
+      `https://t.me/share/url?url=${url}&text=${text}`,
+    )
   }
   return (
     <div className="min-h-screen flex flex-col bg-black text-white">
