@@ -10,16 +10,16 @@ export default function AnniversaryPage() {
   const ranking = useAppSelector(selectUserRank)
   const navigate = useNavigate()
 
-  const userId = WebApp.initDataUnsafe?.user?.id ?? 5053674641
+  const userId = WebApp.initDataUnsafe?.user?.id ?? null
   const handleContinue = () => {
     navigate('/reward')
   }
 
   useEffect(() => {
-    if (userId) {
+    if (userId && !ranking) {
       dispatch(fetchRankingById(userId))
     }
-  }, [userId, dispatch])
+  }, [userId, ranking, dispatch])
 
   useEffect(() => {
     if (ranking?.createdAt) {

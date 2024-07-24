@@ -1,25 +1,21 @@
 import WebApp from '@twa-dev/sdk'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import { useAppDispatch, useAppSelector } from '../app/hook'
+import { fetchFriendById, selectFriends } from '../app/slice/friendSlice'
 import duckCoin from '../assets/images/duck_coin.png'
-import axios from '../config/axios.config'
-import { Referral } from '../interfaces/referrals.type'
-import FriendItem from './FriendItem'
 import { preProcessUrl } from '../helpers/image'
+import FriendItem from './FriendItem'
 
 const InviteFriends: React.FC = () => {
-  const [friends, setFriends] = useState<Referral[] | null>(null)
-  const userId = WebApp.initDataUnsafe?.user?.id ?? 5053674641
+  const userId = WebApp.initDataUnsafe?.user?.id ?? null
+  const dispatch = useAppDispatch()
+  const friends = useAppSelector(selectFriends)
 
   useEffect(() => {
-    if (userId) {
-      axios
-        .get(`/referral/id/${userId}`)
-        .then(({ data }) => setFriends(data))
-        .catch((error) => console.error('Error fetching user data:', error))
+    if (userId && !friends) {
+      dispatch(fetchFriendById(userId))
     }
-  }, [])
-
-  const referral = import.meta.env.VITE_REFERRAL_LINK
+  }, [userId, friends, dispatch])
 
   useEffect(() => {
     if (window.Telegram?.WebApp) {
@@ -36,6 +32,7 @@ const InviteFriends: React.FC = () => {
     }
   }, [])
 
+  // Format share of telegram
   // https://t.me/share/url?url={url}&text={text}
 
   const handleOpenTgLink = () => {

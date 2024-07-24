@@ -7,7 +7,7 @@ import { fetchRankingById, selectUserRank } from '../app/slice/rankingSlice'
 const RewardPage = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const userId = WebApp.initDataUnsafe?.user?.id ?? 5053674641
+  const userId = WebApp.initDataUnsafe?.user?.id ?? null
   const ranking = useAppSelector(selectUserRank)
 
   const handleContinue = () => {
@@ -15,10 +15,10 @@ const RewardPage = () => {
   }
 
   useEffect(() => {
-    if (userId) {
+    if (userId && !ranking) {
       dispatch(fetchRankingById(userId))
     }
-  }, [userId, dispatch])
+  }, [userId, ranking, dispatch])
 
   return (
     <div className="min-h-screen flex flex-col justify-between bg-black text-white p-4 ">
