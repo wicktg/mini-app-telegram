@@ -1,9 +1,9 @@
 import WebApp from '@twa-dev/sdk'
 import React, { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '../app/hook'
-import { fetchFriendById, selectFriends } from '../app/slice/friendSlice'
-import duckCoin from '../assets/images/duck_coin.png'
-import { preProcessUrl } from '../helpers/image'
+import { useAppDispatch, useAppSelector } from '@/app/hook'
+import { fetchFriendById, selectFriends } from '@/app/slice/friendSlice'
+import duckCoin from '@/assets/images/duck_coin.png'
+import { preProcessUrl } from '@/helpers/image'
 import FriendItem from './FriendItem'
 
 const InviteFriends: React.FC = () => {
