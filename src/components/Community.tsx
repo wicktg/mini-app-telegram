@@ -4,7 +4,7 @@ export const Community = () => {
   }
 
   return (
-    <div className="bg-custom-dark text-white p-6 rounded-lg mt-8 ml-3 mr-3 mx-auto">
+    <div className="bg-custom-dark text-white p-6 rounded-lg mt-4 ml-3 mr-3 mx-auto">
       <h2 className="text-xl font-bold">DUCK COMMUNITY</h2>
       <p className="text-sm mt-2">Home for Telegram Sparkminds</p>
       <button
