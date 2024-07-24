@@ -7,7 +7,7 @@ import { preProcessUrl } from '../helpers/image'
 import FriendItem from './FriendItem'
 
 const InviteFriends: React.FC = () => {
-  const userId = WebApp.initDataUnsafe?.user?.id ?? 5053674641
+  const userId = WebApp.initDataUnsafe?.user?.id ?? null
   const dispatch = useAppDispatch()
   const friends = useAppSelector(selectFriends)
 

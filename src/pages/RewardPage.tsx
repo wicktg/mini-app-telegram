@@ -7,7 +7,7 @@ import { fetchRankingById, selectUserRank } from '../app/slice/rankingSlice'
 const RewardPage = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const userId = WebApp.initDataUnsafe?.user?.id ?? 5053674641
+  const userId = WebApp.initDataUnsafe?.user?.id ?? null
   const ranking = useAppSelector(selectUserRank)
 
   const handleContinue = () => {

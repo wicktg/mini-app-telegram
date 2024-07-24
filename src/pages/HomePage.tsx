@@ -11,7 +11,7 @@ import { Rewards } from '../components/Rewards'
 const HomePage = () => {
   const dispatch = useAppDispatch()
   const user = useAppSelector(selectUserById)
-  const userId = WebApp.initDataUnsafe?.user?.id ?? 5053674641
+  const userId = WebApp.initDataUnsafe?.user?.id ?? null
 
   useEffect(() => {
     if (userId && !user) {
