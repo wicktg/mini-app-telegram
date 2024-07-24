@@ -25,7 +25,7 @@ export const fetchFriendById = createAsyncThunk(
   },
 )
 
-const friendSlice = createSlice({
+export const friendSlice = createSlice({
   name: 'friend',
   initialState,
   reducers: {},

@@ -1,6 +1,6 @@
 import InviteFriends from '../components/InviteFriends'
 
-const InviteFriendPage = () => {
+export const InviteFriendPage = () => {
   return <InviteFriends />
 }
 

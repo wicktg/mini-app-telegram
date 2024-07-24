@@ -1,12 +1,12 @@
 import WebApp from '@twa-dev/sdk'
 import { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '../app/hook'
-import { fetchRankingById, fetchRankings } from '../app/slice/rankingSlice'
-import { RootState } from '../app/store'
-import UserCard from '../components/Leaderboard/UserCard'
-import { preProcessUrl } from '../helpers/image'
+import { useAppDispatch, useAppSelector } from '@/app/hook'
+import { fetchRankingById, fetchRankings } from '@/app/slice/rankingSlice'
+import { RootState } from '@/app/store'
+import UserCard from '@/components/Leaderboard/UserCard'
+import { preProcessUrl } from '@/helpers/image'
 
-const LeaderboardPage = () => {
+export const LeaderboardPage = () => {
   const userId = WebApp.initDataUnsafe?.user?.id ?? null
   const dispatch = useAppDispatch()
 

@@ -53,7 +53,9 @@ const InviteFriends: React.FC = () => {
       </div>
 
       <div className="flex-grow p-4 overflow-y-auto ">
-        <h2 className="text-lg font-bold mb-4">{friends?.length} friends</h2>
+        <h2 className="text-lg font-bold mb-4">
+          {friends?.length ?? 0} friends
+        </h2>
         {friends?.map((friend, index) => (
           <FriendItem
             key={index}

@@ -35,7 +35,7 @@ export const fetchRankings = createAsyncThunk(
   },
 )
 
-const rankingSlice = createSlice({
+export const rankingSlice = createSlice({
   name: 'ranking',
   initialState,
   reducers: {},

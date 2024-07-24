@@ -1,20 +1,14 @@
 import WebApp from '@twa-dev/sdk'
 import { useEffect } from 'react'
-import { Community } from '../components/Community'
-import { Content } from '../components/Content'
-import { Header } from '../components/Header'
+import { useTonConnectUI, useTonWallet } from '@tonconnect/ui-react'
 
-import { useAppDispatch, useAppSelector } from '../app/hook'
-import { fetchUserById, selectUserById } from '../app/slice/userSlice'
-import { Rewards } from '../components/Rewards'
-import {
-  TonConnectButton,
-  useTonConnectUI,
-  useTonWallet,
-} from '@tonconnect/ui-react'
-import { convertHexToNonBounceable, shortAddress } from '../helpers/tonHelper'
+import { Community, Content, Rewards, Header } from '@/components'
 
-const HomePage = () => {
+import { useAppDispatch, useAppSelector } from '@/app/hook'
+import { fetchUserById, selectUserById } from '@/app/slice/userSlice'
+import { convertHexToNonBounceable, shortAddress } from '@/helpers/tonHelper'
+
+export const HomePage = () => {
   const dispatch = useAppDispatch()
   const user = useAppSelector(selectUserById)
   const userId = WebApp.initDataUnsafe?.user?.id ?? null

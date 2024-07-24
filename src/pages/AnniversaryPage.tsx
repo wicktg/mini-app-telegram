@@ -1,10 +1,10 @@
 import WebApp from '@twa-dev/sdk'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../app/hook'
-import { fetchRankingById, selectUserRank } from '../app/slice/rankingSlice'
+import { useAppDispatch, useAppSelector } from '@/app/hook'
+import { fetchRankingById, selectUserRank } from '@/app/slice/rankingSlice'
 
-export default function AnniversaryPage() {
+export const AnniversaryPage = () => {
   const [year, setYear] = useState(1)
   const dispatch = useAppDispatch()
   const ranking = useAppSelector(selectUserRank)
@@ -73,3 +73,5 @@ export default function AnniversaryPage() {
     </div>
   )
 }
+
+export default AnniversaryPage
