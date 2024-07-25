@@ -22,7 +22,6 @@ export const HomePage = () => {
   const userId = WebApp.initDataUnsafe?.user?.id ?? null
   const wallet = useTonWallet()
   const [tonConnectUi] = useTonConnectUI()
-
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
@@ -36,29 +35,31 @@ export const HomePage = () => {
       (user?.point ?? 0) + (user?.friendPoint ?? 0) + (user?.rewardWallet ?? 0),
     [user],
   )
-  const walletButtonText =
-    address && wallet ? shortAddress(address) : 'Connect wallet'
+
+  const walletButtonText = useMemo(
+    () => (address && wallet ? shortAddress(address) : 'Connect wallet'),
+    [address, wallet],
+  )
 
   const handleClickConnectWallet = () => {
     if (wallet) {
       setIsOpen(true)
-      return
+    } else {
+      tonConnectUi.openModal()
     }
-    tonConnectUi.openModal()
   }
 
   useEffect(() => {
-    if (wallet && wallet.account && wallet.account.address) {
-      wallet.account.address
+    if (wallet && wallet.account?.address) {
       dispatch(decodeAddress({ hex: wallet.account.address }))
     }
-  }, [wallet])
+  }, [wallet, dispatch])
 
   useEffect(() => {
     if (userId && address) {
       dispatch(updateUserWallet({ telegramId: userId, addressWallet: address }))
     }
-  }, [wallet, userId])
+  }, [userId, address, dispatch])
 
   const handleConnectDifferentWallet = () => {
     if (wallet) {

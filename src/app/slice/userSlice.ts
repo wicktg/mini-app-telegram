@@ -2,6 +2,7 @@ import { User } from '../../interfaces/users.type'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from '../../config/axios.config'
 import { RootState } from '../store'
+import { handleError, handlePending } from './genericSlice'
 
 interface UserState {
   user: User | null
@@ -63,48 +64,31 @@ export const userSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchUserById.pending, (state) => {
-        state.loading = true
-        state.error = null
-      })
+      .addCase(fetchUserById.pending, handlePending)
       .addCase(fetchUserById.fulfilled, (state, action) => {
         state.loading = false
         state.user = action.payload
       })
-      .addCase(fetchUserById.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.error.message || 'Error fetching user'
-      })
-      .addCase(fetchUsers.pending, (state) => {
-        state.loading = true
-        state.error = null
-      })
+      .addCase(fetchUserById.rejected, handleError)
+      .addCase(fetchUsers.pending, handlePending)
 
       .addCase(fetchUsers.fulfilled, (state, action) => {
         state.loading = false
         state.users = action.payload.users
       })
-      .addCase(fetchUsers.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.error.message || 'Error fetching users'
-      })
-      .addCase(updateUserWallet.pending, (state) => {
-        state.loading = true
-        state.error = null
-      })
+      .addCase(fetchUsers.rejected, handleError)
+      .addCase(updateUserWallet.pending, handlePending)
       .addCase(updateUserWallet.fulfilled, (state, action) => {
         state.loading = false
         state.user = action.payload
       })
-      .addCase(updateUserWallet.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.error.message || 'Error updating wallet'
-      })
-
+      .addCase(updateUserWallet.rejected, handleError)
+      .addCase(decodeAddress.pending, handlePending)
       .addCase(decodeAddress.fulfilled, (state, action) => {
         state.loading = false
         state.address = action.payload
       })
+      .addCase(decodeAddress.rejected, handleError)
   },
 })
 

@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import axios from '../../config/axios.config'
-import { Ranking } from '../../interfaces/ranks.type'
+import axios from '@/config/axios.config'
+import { Ranking } from '@/interfaces/ranks.type'
 import { RootState } from '../store'
+import { handleError, handlePending } from './genericSlice'
 
 interface RankingState {
   ranking: Ranking | null
@@ -41,31 +42,19 @@ export const rankingSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchRankingById.pending, (state) => {
-        state.loading = true
-        state.error = null
-      })
+      .addCase(fetchRankingById.pending, handlePending)
       .addCase(fetchRankingById.fulfilled, (state, action) => {
         state.loading = false
         state.ranking = action.payload
       })
-      .addCase(fetchRankingById.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.error.message || 'Error fetching ranking'
-      })
-      .addCase(fetchRankings.pending, (state) => {
-        state.loading = true
-        state.error = null
-      })
+      .addCase(fetchRankingById.rejected, handleError)
+      .addCase(fetchRankings.pending, handlePending)
       .addCase(fetchRankings.fulfilled, (state, action) => {
         state.loading = false
         state.rankings = action.payload.ranks
         state.totalHolder = action.payload.totalHolder
       })
-      .addCase(fetchRankings.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.error.message || 'Error fetching rankings'
-      })
+      .addCase(fetchRankings.rejected, handleError)
   },
 })
 
