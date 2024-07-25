@@ -1,27 +1,29 @@
+import { useTonConnectUI, useTonWallet } from '@tonconnect/ui-react'
 import WebApp from '@twa-dev/sdk'
 import { useEffect, useMemo, useState } from 'react'
-import { useTonConnectUI, useTonWallet } from '@tonconnect/ui-react'
 
-import { Community, Content, Rewards, Header } from '@/components'
+import { Community, Content, Header, Rewards } from '@/components'
 
 import { useAppDispatch, useAppSelector } from '@/app/hook'
 import {
+  decodeAddress,
   fetchUserById,
+  selectAddress,
   selectUserById,
   updateUserWallet,
 } from '@/app/slice/userSlice'
-import { convertHexToNonBounceable, shortAddress } from '@/helpers/tonHelper'
+import { shortAddress } from '@/helpers/tonHelper'
 import { Sheet } from 'react-modal-sheet'
 
 export const HomePage = () => {
   const dispatch = useAppDispatch()
   const user = useAppSelector(selectUserById)
+  const address = useAppSelector(selectAddress)
   const userId = WebApp.initDataUnsafe?.user?.id ?? null
   const wallet = useTonWallet()
   const [tonConnectUi] = useTonConnectUI()
 
   const [isOpen, setIsOpen] = useState(false)
-  const [address, setAddress] = useState('')
 
   useEffect(() => {
     if (userId && !user) {
@@ -34,9 +36,8 @@ export const HomePage = () => {
       (user?.point ?? 0) + (user?.friendPoint ?? 0) + (user?.rewardWallet ?? 0),
     [user],
   )
-  const walletButtonText = wallet
-    ? shortAddress(convertHexToNonBounceable(wallet.account.address))
-    : 'Connect wallet'
+  const walletButtonText =
+    address && wallet ? shortAddress(address) : 'Connect wallet'
 
   const handleClickConnectWallet = () => {
     if (wallet) {
@@ -48,7 +49,8 @@ export const HomePage = () => {
 
   useEffect(() => {
     if (wallet && wallet.account && wallet.account.address) {
-      setAddress(convertHexToNonBounceable(wallet.account.address))
+      wallet.account.address
+      dispatch(decodeAddress({ hex: wallet.account.address }))
     }
   }, [wallet])
 

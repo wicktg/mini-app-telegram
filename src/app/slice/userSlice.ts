@@ -6,6 +6,7 @@ import { RootState } from '../store'
 interface UserState {
   user: User | null
   users: User[] | null
+  address: string | null
   loading: boolean
   error: string | null
 }
@@ -13,6 +14,7 @@ interface UserState {
 const initialState: UserState = {
   user: null,
   users: null,
+  address: null,
   loading: false,
   error: null,
 }
@@ -29,6 +31,14 @@ export const fetchUsers = createAsyncThunk('user/fetchUsers', async () => {
   const response = await axios.get('/user')
   return response.data
 })
+
+export const decodeAddress = createAsyncThunk(
+  'address',
+  async ({ hex }: { hex: string }) => {
+    const response = await axios.post('/telegram/wallet', { hex })
+    return response.data
+  },
+)
 
 export const updateUserWallet = createAsyncThunk(
   'user/updateWallet',
@@ -90,10 +100,16 @@ export const userSlice = createSlice({
         state.loading = false
         state.error = action.error.message || 'Error updating wallet'
       })
+
+      .addCase(decodeAddress.fulfilled, (state, action) => {
+        state.loading = false
+        state.address = action.payload
+      })
   },
 })
 
 export const selectUserById = (state: RootState) => state.user.user
 export const selectUsers = (state: RootState) => state.user.users
+export const selectAddress = (state: RootState) => state.user.address
 
 export default userSlice.reducer
