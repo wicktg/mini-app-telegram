@@ -47,7 +47,7 @@ export const LeaderboardPage = () => {
         ⭐ Boost score
       </button>
       <h2 className="text-xl font-bold mb-4">
-        {totalHolder?.toFixed(1)}.6M holders
+        {totalHolder?.toFixed(0)}.6M holders
       </h2>
       <div>
         {rankings?.map((item) => (

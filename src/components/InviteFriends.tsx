@@ -2,7 +2,8 @@ import WebApp from '@twa-dev/sdk'
 import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@/app/hook'
 import { fetchFriendById, selectFriends } from '@/app/slice/friendSlice'
-import duckCoin from '@/assets/images/duck_coin.png'
+import duckCoin from '@/assets/images/a56.gif'
+
 import { preProcessUrl } from '@/helpers/image'
 import FriendItem from './FriendItem'
 
@@ -47,8 +48,8 @@ const InviteFriends: React.FC = () => {
       <div className="text-center p-4">
         <h1 className="text-2xl font-bold">Invited friends</h1>
         <p className="text-xl mt-1">and get more DUCKS</p>
-        <div className="my-2">
-          <img src={duckCoin} alt="DUCKS" className="mx-auto" />
+        <div className="my-2 mt-3">
+          <img src={duckCoin} alt="DUCKS" className="mx-auto w-[90%] " />
         </div>
       </div>
 
