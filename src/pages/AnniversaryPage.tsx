@@ -1,19 +1,27 @@
 import WebApp from '@twa-dev/sdk'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../app/hook'
-import { fetchRankingById, selectUserRank } from '../app/slice/rankingSlice'
+import { useAppDispatch, useAppSelector } from '@/app/hook'
+import { fetchRankingById, selectUserRank } from '@/app/slice/rankingSlice'
 
-export default function AnniversaryPage() {
+const handleYear = (time: Date) => {
+  const year = time.getFullYear()
+  const currentYear = new Date().getFullYear()
+  const differentYear = currentYear - year
+  return differentYear > 1 ? differentYear : 1
+}
+
+export const AnniversaryPage = () => {
   const [year, setYear] = useState(1)
   const dispatch = useAppDispatch()
   const ranking = useAppSelector(selectUserRank)
   const navigate = useNavigate()
 
   const userId = WebApp.initDataUnsafe?.user?.id ?? null
-  const handleContinue = () => {
+
+  const handleContinue = useCallback(() => {
     navigate('/reward')
-  }
+  }, [navigate])
 
   useEffect(() => {
     if (userId && !ranking) {
@@ -29,15 +37,18 @@ export default function AnniversaryPage() {
     }
   }, [ranking])
 
-  const handleYear = (time: Date) => {
-    const year = time.getFullYear()
-    const currentYear = new Date().getFullYear()
-    const differentYear = currentYear - year
-    return differentYear > 1 ? differentYear : 1
-  }
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = 'auto'
+    }
+  }, [])
+
+  const accountNumber = useMemo(() => ranking?.ranking ?? 0, [ranking])
+
   return (
     <div
-      className="min-h-screen flex flex-col justify-between bg-black text-white p-4 hover:bg-cover focus:bg-cover"
+      className="min-h-screen flex flex-col justify-between bg-black text-white p-4 hover:bg-cover focus:bg-cover overflow-hidden"
       style={{
         backgroundImage: 'url(https://wallpapercave.com/wp/wp10649036.jpg)',
       }}>
@@ -59,7 +70,7 @@ export default function AnniversaryPage() {
           <p className="text-4xl font-bold mt-4">years ago</p>
         </div>
         <p className="mt-4 font-bold">
-          Your account number is <strong>#{ranking?.ranking ?? 0}</strong>
+          Your account number is <strong>#{accountNumber}</strong>
         </p>
         <p className="font-bold">You're in the Top 70% Telegram users 🔥</p>
       </div>
@@ -73,3 +84,5 @@ export default function AnniversaryPage() {
     </div>
   )
 }
+
+export default AnniversaryPage

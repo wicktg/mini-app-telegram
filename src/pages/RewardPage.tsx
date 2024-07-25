@@ -1,10 +1,10 @@
 import WebApp from '@twa-dev/sdk'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../app/hook'
-import { fetchRankingById, selectUserRank } from '../app/slice/rankingSlice'
+import { useAppDispatch, useAppSelector } from '@/app/hook'
+import { fetchRankingById, selectUserRank } from '@/app/slice/rankingSlice'
 
-const RewardPage = () => {
+export const RewardPage = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const userId = WebApp.initDataUnsafe?.user?.id ?? null

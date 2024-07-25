@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { Referral } from '../../interfaces/referrals.type'
 import axios from '../../config/axios.config'
 import { RootState } from '../store'
+import { handleError, handlePending } from './genericSlice'
 
 interface FriendState {
   friends: Referral[] | null
@@ -25,24 +26,19 @@ export const fetchFriendById = createAsyncThunk(
   },
 )
 
-const friendSlice = createSlice({
+export const friendSlice = createSlice({
   name: 'friend',
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchFriendById.pending, (state) => {
-        ;(state.loading = true), (state.error = null)
-      })
+      .addCase(fetchFriendById.pending, handlePending)
       .addCase(fetchFriendById.fulfilled, (state, action) => {
         state.loading = false
         state.friends = action.payload
         state.totalFriend = action.payload.length
       })
-      .addCase(fetchFriendById.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.error.message || 'Error fetching friends'
-      })
+      .addCase(fetchFriendById.rejected, handleError)
   },
 })
 

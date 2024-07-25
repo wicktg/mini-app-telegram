@@ -1,16 +1,19 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
-import MainLayout from './components/MainLayout'
-import AnniversaryPage from './pages/AnniversaryPage'
-import HomePage from './pages/HomePage'
-import InviteFriendPage from './pages/InviteFriendPage'
-import LeaderboardPage from './pages/Leaderboard'
-import RewardPage from './pages/RewardPage'
+import MainLayout from '@/components/MainLayout'
+
 import { THEME, TonConnectUIProvider } from '@tonconnect/ui-react'
+import {
+  AnniversaryPage,
+  HomePage,
+  InviteFriendPage,
+  LeaderboardPage,
+  RewardPage,
+} from '@/pages'
 
 function App() {
   return (
     <TonConnectUIProvider
-      manifestUrl="https://mantis-lenient-usually.ngrok-free.app/tonconnect-manifest.json"
+      manifestUrl="https://complete-fowl-centrally.ngrok-free.app/tonconnect-manifest.json"
       uiPreferences={{ theme: THEME.DARK }}
       actionsConfiguration={{
         twaReturnUrl: 'https://t.me/Duck_01_bot/DuckMeme',
