@@ -5,7 +5,11 @@ import { useTonConnectUI, useTonWallet } from '@tonconnect/ui-react'
 import { Community, Content, Rewards, Header } from '@/components'
 
 import { useAppDispatch, useAppSelector } from '@/app/hook'
-import { fetchUserById, selectUserById } from '@/app/slice/userSlice'
+import {
+  fetchUserById,
+  selectUserById,
+  updateUserWallet,
+} from '@/app/slice/userSlice'
 import { convertHexToNonBounceable, shortAddress } from '@/helpers/tonHelper'
 import { Sheet } from 'react-modal-sheet'
 
@@ -17,6 +21,7 @@ export const HomePage = () => {
   const [tonConnectUi] = useTonConnectUI()
 
   const [isOpen, setIsOpen] = useState(false)
+  const [address, setAddress] = useState('')
 
   useEffect(() => {
     if (userId && !user) {
@@ -25,7 +30,8 @@ export const HomePage = () => {
   }, [userId, user, dispatch])
 
   const userPoints = useMemo(
-    () => (user?.point ?? 0) + (user?.friendPoint ?? 0),
+    () =>
+      (user?.point ?? 0) + (user?.friendPoint ?? 0) + (user?.rewardWallet ?? 0),
     [user],
   )
   const walletButtonText = wallet
@@ -39,6 +45,18 @@ export const HomePage = () => {
     }
     tonConnectUi.openModal()
   }
+
+  useEffect(() => {
+    if (wallet && wallet.account && wallet.account.address) {
+      setAddress(convertHexToNonBounceable(wallet.account.address))
+    }
+  }, [wallet])
+
+  useEffect(() => {
+    if (userId && address) {
+      dispatch(updateUserWallet({ telegramId: userId, addressWallet: address }))
+    }
+  }, [wallet, userId])
 
   const handleConnectDifferentWallet = () => {
     if (wallet) {
@@ -100,8 +118,9 @@ export const HomePage = () => {
 
         <Community />
         <Rewards
-          pointAge={user?.point ?? 0}
-          pointFriends={user?.friendPoint ?? 0}
+          pointAge={user?.point}
+          pointFriends={user?.friendPoint}
+          pointWallets={user?.rewardWallet}
         />
       </div>
     </div>

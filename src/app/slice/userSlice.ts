@@ -30,6 +30,23 @@ export const fetchUsers = createAsyncThunk('user/fetchUsers', async () => {
   return response.data
 })
 
+export const updateUserWallet = createAsyncThunk(
+  'user/updateWallet',
+  async ({
+    telegramId,
+    addressWallet,
+  }: {
+    telegramId: number
+    addressWallet: string
+  }) => {
+    const response = await axios.post('/user/wallet', {
+      telegramId,
+      addressWallet,
+    })
+    return response.data
+  },
+)
+
 export const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -60,6 +77,18 @@ export const userSlice = createSlice({
       .addCase(fetchUsers.rejected, (state, action) => {
         state.loading = false
         state.error = action.error.message || 'Error fetching users'
+      })
+      .addCase(updateUserWallet.pending, (state) => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(updateUserWallet.fulfilled, (state, action) => {
+        state.loading = false
+        state.user = action.payload
+      })
+      .addCase(updateUserWallet.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.error.message || 'Error updating wallet'
       })
   },
 })

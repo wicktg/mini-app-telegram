@@ -4,7 +4,11 @@ import AccountAgeIcon from '@/assets/svgs/accountAgeIcon.svg'
 import TelegramPremiumIcon from '@/assets/svgs/telegramPremiumIcon.svg'
 import InvitedFriendsIcon from '@/assets/svgs/invitedFriendsIcon.svg'
 
-export const Rewards = ({ pointAge = 0, pointFriends = 0 }) => {
+export const Rewards = ({
+  pointAge = 0,
+  pointFriends = 0,
+  pointWallets = 0,
+}) => {
   return (
     <div className="text-white p-4 rounded-lg">
       <div className="text-xl font-bold mb-4">Your rewards</div>
@@ -23,7 +27,11 @@ export const Rewards = ({ pointAge = 0, pointFriends = 0 }) => {
         title="Invited friends"
         point={pointFriends}
       />
-      <RewardItem icon={<WalletSvg />} title="Connect Wallet" point={0} />
+      <RewardItem
+        icon={<WalletSvg />}
+        title="Connect Wallet"
+        point={pointWallets}
+      />
     </div>
   )
 }

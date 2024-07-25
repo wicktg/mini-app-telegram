@@ -5,4 +5,10 @@ export interface User {
   point: number
   friendPoint: number
   registeredDate: string
+  rewardWallet: number
+}
+
+export interface userWallet {
+  telegramId: string
+  wallet: string
 }
