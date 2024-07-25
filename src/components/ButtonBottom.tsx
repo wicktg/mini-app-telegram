@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 type ButtonProps = {
   icon: React.ReactNode
@@ -8,10 +8,14 @@ type ButtonProps = {
 
 const ButtonBottom: React.FC<ButtonProps> = ({ icon, label, to }) => {
   return (
-    <Link to={to} className="text-center text-[#85827d] w-1/5">
+    <NavLink
+      to={to}
+      className={({ isActive }) =>
+        `text-center w-1/5 ${isActive ? 'text-white' : 'text-[#85827d]'}`
+      }>
       <div className="w-8 h-8 mx-auto">{icon}</div>
       <p className="mt-1">{label}</p>
-    </Link>
+    </NavLink>
   )
 }
 
