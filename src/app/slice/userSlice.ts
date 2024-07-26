@@ -43,16 +43,10 @@ export const decodeAddress = createAsyncThunk(
 
 export const updateUserWallet = createAsyncThunk(
   'user/updateWallet',
-  async ({
-    telegramId,
-    addressWallet,
-  }: {
-    telegramId: number
-    addressWallet: string
-  }) => {
+  async ({ telegramId, wallet }: { telegramId: number; wallet: string }) => {
     const response = await axios.post('/user/wallet', {
       telegramId,
-      addressWallet,
+      wallet,
     })
     return response.data
   },

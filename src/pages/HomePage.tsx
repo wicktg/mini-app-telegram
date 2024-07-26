@@ -6,9 +6,7 @@ import { Community, Content, Header, Rewards } from '@/components'
 
 import { useAppDispatch, useAppSelector } from '@/app/hook'
 import {
-  decodeAddress,
   fetchUserById,
-  selectAddress,
   selectUserById,
   updateUserWallet,
 } from '@/app/slice/userSlice'
@@ -18,7 +16,7 @@ import { Sheet } from 'react-modal-sheet'
 export const HomePage = () => {
   const dispatch = useAppDispatch()
   const user = useAppSelector(selectUserById)
-  const address = useAppSelector(selectAddress)
+
   const userId = WebApp.initDataUnsafe?.user?.id ?? null
   const wallet = useTonWallet()
   const [tonConnectUi] = useTonConnectUI()
@@ -30,16 +28,26 @@ export const HomePage = () => {
     }
   }, [userId, user, dispatch])
 
-  const userPoints = useMemo(
-    () =>
-      (user?.point ?? 0) + (user?.friendPoint ?? 0) + (user?.rewardWallet ?? 0),
-    [user],
-  )
+  useEffect(() => {
+    if (userId && !user?.wallet && wallet?.account.address) {
+      dispatch(
+        updateUserWallet({
+          telegramId: userId,
+          wallet: wallet?.account.address,
+        }),
+      )
+    }
+  }, [userId, wallet, user, dispatch])
 
-  const walletButtonText = useMemo(
-    () => (address && wallet ? shortAddress(address) : 'Connect wallet'),
-    [address, wallet],
-  )
+  const userPoints = useMemo(() => {
+    return (
+      (user?.point ?? 0) + (user?.friendPoint ?? 0) + (user?.rewardWallet ?? 0)
+    )
+  }, [user])
+
+  const walletButtonText = useMemo(() => {
+    return user?.wallet && wallet ? shortAddress(user.wallet) : 'Connect wallet'
+  }, [wallet, user])
 
   const handleClickConnectWallet = () => {
     if (wallet) {
@@ -48,18 +56,6 @@ export const HomePage = () => {
       tonConnectUi.openModal()
     }
   }
-
-  useEffect(() => {
-    if (wallet && wallet.account?.address) {
-      dispatch(decodeAddress({ hex: wallet.account.address }))
-    }
-  }, [wallet, dispatch])
-
-  useEffect(() => {
-    if (userId && address) {
-      dispatch(updateUserWallet({ telegramId: userId, addressWallet: address }))
-    }
-  }, [userId, address, dispatch])
 
   const handleConnectDifferentWallet = () => {
     if (wallet) {
