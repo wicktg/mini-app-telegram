@@ -6,6 +6,7 @@ export interface User {
   friendPoint: number
   registeredDate: string
   rewardWallet: number
+  wallet: string
 }
 
 export interface userWallet {
