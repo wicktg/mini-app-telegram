@@ -13,7 +13,7 @@ import {
 function App() {
   return (
     <TonConnectUIProvider
-      manifestUrl="https://complete-fowl-centrally.ngrok-free.app/tonconnect-manifest.json"
+      manifestUrl="https://ducktma.netlify.app/tonconnect-manifest.json"
       uiPreferences={{ theme: THEME.DARK }}
       actionsConfiguration={{
         twaReturnUrl: 'https://t.me/Duck_01_bot/DuckMeme',
