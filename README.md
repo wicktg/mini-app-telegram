@@ -1,17 +1,79 @@
-# Vite + React + Typescript + Eslint + Prettier + React Testing Library
+# Telegram Mini App - Simple Game
 
-A starter for React with Typescript with the fast Vite and all static code testing with Eslint and formatting with Prettier.
+This is a simple game application on Telegram, built with ReactJS. The game has mechanics similar to the "Dogs" game, where players can participate and connect their TON wallets to interact with the game. The app integrates multiple wallet options for users, such as Tonkeeper, MyTonWallet, Tonhub, and more.
 
-I found out about Vite and I wanted to have a boilerplate for the technologies that I use. You can find more about these in the following links: [Vite](https://github.com/vitejs/vite), [React](https://reactjs.org/), [Typescript](https://www.typescriptlang.org/), [Eslint](https://eslint.org/), [Prettier](https://prettier.io/).
+**I would be delighted if you give this repo a star! 🌟**
 
-## Installation
+## Table of Contents
 
-Clone the repo and run `yarn install`
+- [Telegram Mini App - Simple Game](#telegram-mini-app---simple-game)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Installation 🛠️](#installation-️)
+  - [Configuration 🌐](#configuration-)
+  - [Start 🌈](#start-)
+  - [Features 🔥](#features-)
+  - [Dependencies 🚩](#dependencies-)
 
-## Start
+## Introduction
 
-After the successfull installation of the packages: `yarn dev`
+This project is a simple mini-game designed for Telegram with gameplay similar to "Dogs." Players can connect their TON wallets to join the game and experience interactive features. The app supports popular wallet options and runs smoothly within the Telegram environment.
 
-## Test
+![Home](https://res.cloudinary.com/dk6y8q94b/image/upload/v1724310049/itllytgv1hoskcobllkx.png)
 
-Run `yarn test` to run testing
+![Score](https://res.cloudinary.com/dk6y8q94b/image/upload/v1724310049/hqu7dbmj6yojuf5madlq.png)
+
+## Installation 🛠️
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/Kidkender/mini-app-telegram
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd mini-app-tele
+   ```
+
+3. Install the necessary packages:
+
+   ```bash
+   yarn install
+   ```
+
+## Configuration 🌐
+
+Before running the app, make sure to set up the required environment variables. You may need to create a .env file in the project root directory with the following keys:
+
+> VITE_BACKEND_URL
+> VITE_BOT_TOKEN
+> VITE_REFERRAL_LINK
+
+## Start 🌈
+
+After successfully installing the packages, you can start the development server with:
+
+```bash
+yarn dev
+```
+
+## Features 🔥
+
+- **Reward Tokens**: Players receive reward tokens based on the number of years they have participated in Telegram.
+- **Ranking and Leaderboard**: A leaderboard system to track and display player rankings based on performance and achievements.
+- **Invite Friends**: Players can invite friends to join the game and receive bonuses or rewards.
+- **TON Wallet Integration**: Supports various wallets for easy connectivity:
+  - Tonkeeper
+  - MyTonWallet
+  - Tonhub
+  - OKX
+  - And more...
+
+## Dependencies 🚩
+
+> Yarn
+> Axios
+> ReactJS
+> Taildwindcss
